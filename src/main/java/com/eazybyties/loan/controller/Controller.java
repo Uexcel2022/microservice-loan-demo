@@ -40,8 +40,8 @@ public class Controller {
     }
 
     @DeleteMapping("/delete")
-    public ResponseEntity<ResponseDto> deleteLoanDetails(LoanDto loanDto){
-        boolean success = iloan.updateLoanDetails(loanDto);
+    public ResponseEntity<ResponseDto> deleteLoanDetails(@RequestParam String mobileNumber){
+        boolean success = iloan.deleteLoanDetails(mobileNumber);
         if(success){
             return ResponseEntity.ok()
                     .body(new ResponseDto(

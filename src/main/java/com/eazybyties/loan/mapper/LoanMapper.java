@@ -20,7 +20,7 @@ public class LoanMapper {
 
 
     public static Loan mapToNewLoan(LoanDto loanDto, Loan newLoan) {
-        Long lonNumber = 100000000000L + new Random().nextInt(900000000);
+        long lonNumber = 100000000000L + new Random().nextInt(900000000);
         newLoan.setLoanNumber(Long.toString(lonNumber));
         newLoan.setLoanType(LoanConstants.HOME_LOAN);
         newLoan.setTotalLoan(LoanConstants.NEW_LOAN_LIMIT);
