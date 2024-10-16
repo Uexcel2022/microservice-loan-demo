@@ -10,5 +10,5 @@ public class LoanConstants {
     public static final String MESSAGE_201 = "Loan created successfully";
     public static final  String  STATUS_CODE_200 = "200";
     public static final String MESSAGE_200_UPDATE = "Loan updated successfully";
-    public static final String MESSAGE_200_Delete = "Loan deleted successfully";
+    public static final String MESSAGE_200_DELETE = "Loan deleted successfully";
 }

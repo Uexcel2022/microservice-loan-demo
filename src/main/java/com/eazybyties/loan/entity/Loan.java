@@ -15,6 +15,8 @@ public class Loan {
     private String loanType;
     private String mobileNumber;
     private double totalLoan;
+    private double amountPaid;
+    private double outstandingAmount;
 }
 
 //`loan_id` int NOT NULL AUTO_INCREMENT,

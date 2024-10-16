@@ -9,4 +9,6 @@ public class LoanDto {
     private String loanType;
     private String mobileNumber;
     private double totalLoan;
+    private double amountPaid;
+    private double outstandingAmount;
 }
