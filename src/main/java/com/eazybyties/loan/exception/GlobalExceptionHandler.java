@@ -5,7 +5,6 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
-import org.springframework.lang.NonNullApi;
 import org.springframework.lang.Nullable;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -58,9 +57,9 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
                 ));
     }
 
-    @ExceptionHandler(InvalidLoanNumberException.class)
+    @ExceptionHandler(InvalidArgumentException.class)
     public ResponseEntity<ErrorResponseDto> handleInvalidLoanNumberException(
-            final InvalidLoanNumberException e, final WebRequest request){
+            final InvalidArgumentException e, final WebRequest request){
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(new ErrorResponseDto(request.getDescription(false),
                         HttpStatus.BAD_REQUEST, e.getMessage(), LocalDateTime.now()

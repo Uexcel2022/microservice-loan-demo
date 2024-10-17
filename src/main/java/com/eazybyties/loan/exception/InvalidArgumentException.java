@@ -6,10 +6,11 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import java.io.Serial;
 
 @ResponseStatus(HttpStatus.BAD_REQUEST)
-public class InvalidLoanNumberException extends RuntimeException {
+public class InvalidArgumentException extends RuntimeException {
     @Serial
     private static final long serialVersionUID = 1L;
-    public InvalidLoanNumberException() {
-        super("Invalid loan number,must be 12 digits");
+    public InvalidArgumentException(String message) {
+        super(message);
     }
+
 }

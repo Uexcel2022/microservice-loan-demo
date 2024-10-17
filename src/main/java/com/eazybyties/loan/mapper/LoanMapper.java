@@ -19,13 +19,13 @@ public class LoanMapper {
 
 
 
-    public static Loan mapToNewLoan(LoanDto loanDto, Loan newLoan) {
+    public static Loan mapToNewLoan(String mobileNumber, Loan newLoan) {
         long lonNumber = 100000000000L + new Random().nextInt(900000000);
         newLoan.setLoanNumber(Long.toString(lonNumber));
         newLoan.setLoanType(LoanConstants.HOME_LOAN);
         newLoan.setTotalLoan(LoanConstants.NEW_LOAN_LIMIT);
-        newLoan.setMobileNumber(loanDto.getMobileNumber());
-        loanDto.setAmountPaid(0);
+        newLoan.setMobileNumber(mobileNumber);
+        newLoan.setAmountPaid(0);
         newLoan.setOutstandingAmount(LoanConstants.NEW_LOAN_LIMIT);
         return newLoan;
     }

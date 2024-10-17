@@ -9,5 +9,5 @@ import java.util.Optional;
 @Repository
 public interface LoanRepository extends JpaRepository<Loan,Long> {
     boolean existsByMobileNumber(String mobileNumber);
-    Optional<Loan> findByMobileNumber(String mobileNumber);
+    Optional<Loan> findByLoanNumberOrMobileNumber(String loanNumber, String mobileNumber);
 }

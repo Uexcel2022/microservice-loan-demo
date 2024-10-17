@@ -20,25 +20,25 @@ import org.springframework.stereotype.Service;
 public class LoanServiceImpl implements ILoan {
     private final LoanRepository loanRepository;
     /**
-     * @param loanDto - A request body to hold new loan information
+     * @param mobileNumber - A mobil number to create new loan details
      * @return  - Returns response code and message with ResponseDto objection
      */
     @Override
-    public ResponseDto createLoanDetails(LoanDto loanDto) {
-        if(loanRepository.existsByMobileNumber(loanDto.getMobileNumber())) {
-            throw new MobileNumberExistException(loanDto.getMobileNumber());
+    public ResponseDto createLoanDetails(String mobileNumber) {
+        if(loanRepository.existsByMobileNumber(mobileNumber)) {
+            throw new MobileNumberExistException(mobileNumber);
         }
-        loanRepository.save(LoanMapper.mapToNewLoan(loanDto,new Loan()));
+        loanRepository.save(LoanMapper.mapToNewLoan(mobileNumber,new Loan()));
         return new ResponseDto(LoanConstants.STATUS_CODE_201,LoanConstants.MESSAGE_201);
     }
 
     /**
-     * @param mobileNumber - A request parameter to hold mobile number
+     * @param mobileOrLoanNumber - A request parameter to hold mobile or loan number
      * @return Returns loan information with LoanDto object
      */
     @Override
-    public LoanDto fetchLoanDetails(String mobileNumber) {
-        return LoanMapper.mapToLoanDto(loanExists(mobileNumber),new LoanDto());
+    public LoanDto fetchLoanDetails(String mobileOrLoanNumber) {
+        return LoanMapper.mapToLoanDto(loanExists(mobileOrLoanNumber),new LoanDto());
     }
 
     /**
@@ -53,20 +53,25 @@ public class LoanServiceImpl implements ILoan {
     }
 
     /**
-     * @param mobileNumber - A request parameter hold mobile number
+     * @param mobileOrLoanNumber - A request parameter hold mobile or loan number
      * @return - Return boolean value indicating update is successful or not
      */
     @Override
-    public boolean deleteLoanDetails(String mobileNumber) {
-        loanRepository.delete(loanExists(mobileNumber));
+    public boolean deleteLoanDetails(String mobileOrLoanNumber) {
+        loanRepository.delete(loanExists(mobileOrLoanNumber));
         return true;
     }
 
 
-    private Loan loanExists(String mobileNumber) {
+    private Loan loanExists(String mobileOrLoanNumber) {
 
-        return  loanRepository.findByMobileNumber(mobileNumber)
+        return  loanRepository.findByLoanNumberOrMobileNumber(
+                mobileOrLoanNumber,mobileOrLoanNumber)
                 .orElseThrow(() ->
-                        new ResourceNotFoundException("Loan","mobileNumber",mobileNumber));
+                        new ResourceNotFoundException(
+                                "Loan","mobileNumber or loanNumber",mobileOrLoanNumber)
+                );
     }
+
+
 }
