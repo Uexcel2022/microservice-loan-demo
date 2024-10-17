@@ -11,8 +11,9 @@
 	<groupId>com.eazybyties</groupId>
 	<artifactId>loan</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
+	<packaging>jar</packaging>
 	<name>loan</name>
-	<description>EazyBank Macroservice Demo</description>
+	<description>EazyBank Microservice Demo</description>
 	<url/>
 	<licenses>
 		<license/>

@@ -15,13 +15,13 @@ public class LoanDto {
     @Schema(
             description = "EazyBank 12 digits loan number", example = "100801363801"
     )
-    @Pattern(regexp = "^[1-9][0-9]{11}$",message = "Loan number must be 12 digits")
+    @Pattern(regexp = "^[1-9][0-9]{11}$",message = "Loan number is invalid, must be 12 digits")
     private String loanNumber;
 
     @Schema(
             description = "Loan types in EazyBank", example = "home loan"
     )
-    @Pattern(regexp = "(Home loan|car loan|school loan)",message = "Invalid loan type")
+    @Pattern(regexp = "(Home loan|vehicle loan|school loan)",message = "Invalid loan type")
     private String loanType;
 
     @Schema(

@@ -12,7 +12,7 @@ public class LoanMapper {
         loan.setLoanType(loanDto.getLoanType());
         loan.setTotalLoan(loanDto.getTotalLoan());
         loan.setMobileNumber(loanDto.getMobileNumber());
-        loan.setAmountPaid(loan.getAmountPaid());
+        loan.setAmountPaid(loanDto.getAmountPaid());
         loan.setOutstandingAmount(loanDto.getOutstandingAmount());
         return loan;
     }
@@ -36,7 +36,7 @@ public class LoanMapper {
         loanDto.setTotalLoan(loan.getTotalLoan());
         loanDto.setMobileNumber(loan.getMobileNumber());
         loanDto.setAmountPaid(loan.getAmountPaid());
-        loan.setOutstandingAmount(loan.getOutstandingAmount());
+        loanDto.setOutstandingAmount(loan.getOutstandingAmount());
         return loanDto;
     }
 }

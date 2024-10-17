@@ -1,7 +1,6 @@
 package com.eazybyties.loan.controller;
 
 import com.eazybyties.loan.constants.LoanConstants;
-import com.eazybyties.loan.dto.CreateLoanDto;
 import com.eazybyties.loan.dto.ErrorResponseDto;
 import com.eazybyties.loan.dto.LoanDto;
 import com.eazybyties.loan.dto.ResponseDto;
@@ -56,11 +55,10 @@ public class LoanController {
     )
 
     @PostMapping("/create")
-    public ResponseEntity<ResponseDto> createLoanDetails(
-            @RequestBody CreateLoanDto createLoanDto){
-        iloan.validateMobileOrLoanNumber(createLoanDto.getMobileNumber());
+    public ResponseEntity<ResponseDto> createLoanDetails(@RequestParam String mobileNumber){
+        iloan.validateMobileNumber(mobileNumber);
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(iloan.createLoanDetails(createLoanDto.getMobileNumber()));
+                .body(iloan.createLoanDetails(mobileNumber));
     }
     @Operation(
             summary = "REST API to Fetch Loan Details",
@@ -102,9 +100,9 @@ public class LoanController {
 
 
     @GetMapping("/fetch")
-    public ResponseEntity<LoanDto> getLoanDetails(@RequestParam String mobileOrLoanNumber){
-        iloan.validateMobileOrLoanNumber(mobileOrLoanNumber);
-       return ResponseEntity.ok().body(iloan.fetchLoanDetails(mobileOrLoanNumber));
+    public ResponseEntity<LoanDto> getLoanDetails(@RequestParam String mobileNumber){
+        iloan.validateMobileNumber(mobileNumber);
+       return ResponseEntity.ok().body(iloan.fetchLoanDetails(mobileNumber));
     }
 
     @Operation(
@@ -219,9 +217,9 @@ public class LoanController {
     )
 
     @DeleteMapping("/delete")
-    public ResponseEntity<ResponseDto> deleteLoanDetails(@RequestParam String mobileOrLoanNumber){
-        iloan.validateMobileOrLoanNumber(mobileOrLoanNumber);
-        boolean success = iloan.deleteLoanDetails(mobileOrLoanNumber);
+    public ResponseEntity<ResponseDto> deleteLoanDetails(@RequestParam String mobileNumber){
+        iloan.validateMobileNumber(mobileNumber);
+        boolean success = iloan.deleteLoanDetails(mobileNumber);
         if(success){
             return ResponseEntity.ok()
                     .body(new ResponseDto(

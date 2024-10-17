@@ -29,14 +29,19 @@ public interface ILoan {
      */
     boolean deleteLoanDetails(String mobileOrLoanNumber);
 
+
     /**
-     * @param mobileOrLoanNumber - mobile or card number
+     * @param mobileNumber - mobile number
      */
-    default void validateMobileOrLoanNumber(String mobileOrLoanNumber) {
-        boolean isValid = mobileOrLoanNumber.matches(("^[1-9][0-9]{11}|0[7-9][01][0-9]{8}$"));
+    default void validateMobileNumber(String mobileNumber) {
+        boolean isValid = mobileNumber.matches(("^0[7-9][01][0-9]{8}$"));
         if(!isValid){
             throw new InvalidArgumentException(
-                    String.format("Card or mobile number %s is invalid", mobileOrLoanNumber));
+                    String.format("Mobile number %s is invalid", mobileNumber));
         }
+
     }
+
+
+
 }
