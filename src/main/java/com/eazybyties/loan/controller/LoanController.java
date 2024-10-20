@@ -2,6 +2,7 @@ package com.eazybyties.loan.controller;
 
 import com.eazybyties.loan.constants.LoanConstants;
 import com.eazybyties.loan.dto.ErrorResponseDto;
+import com.eazybyties.loan.dto.LoanContactInfoDto;
 import com.eazybyties.loan.dto.LoanDto;
 import com.eazybyties.loan.dto.ResponseDto;
 import com.eazybyties.loan.service.ILoan;
@@ -12,11 +13,17 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.LinkedHashMap;
+import java.util.Map;
+
 @Tag(
         name = "EazyBank Loan Microservice CRUD Operation APIs",
         description = "use to CREATE,FETCH,UPDATE AND DELETE loan details"
@@ -24,18 +31,30 @@ import org.springframework.web.bind.annotation.*;
 
 
 @RestController
-@AllArgsConstructor
+//@AllArgsConstructor
 @RequestMapping(value = "/api",produces = MediaType.APPLICATION_JSON_VALUE)
 @Validated
 public class LoanController {
     private final ILoan iloan;
+    private final LoanContactInfoDto loanContactInfoDto;
+    private final Environment env;
+
+    @Value("${build.version}")
+    private String build;
+
+    public LoanController(ILoan iloan, LoanContactInfoDto loanContactInfoDto, Environment env) {
+        this.iloan = iloan;
+        this.loanContactInfoDto = loanContactInfoDto;
+        this.env = env;
+    }
+
     @Operation(
             summary = "REST API to Create Loan Details",
             description = "REST API use to create loan details in EazyBank",
             responses = {
                     @ApiResponse(
                             responseCode = "201",
-                            description = "Loan details created successfully",
+                            description = LoanConstants.STATUS_201_desc,
                             content = @Content(
                                     schema = @Schema(implementation = ResponseDto.class)
                             )
@@ -43,7 +62,7 @@ public class LoanController {
                     ),
                     @ApiResponse(
                             responseCode = "500",
-                            description = "Internal Server Error",
+                            description = LoanConstants.STATUS_500_desc,
                             content = @Content(
                                     schema = @Schema(
                                             implementation = ErrorResponseDto.class
@@ -66,7 +85,7 @@ public class LoanController {
             responses = {
                     @ApiResponse(
                             responseCode = "200",
-                            description = "Success",
+                            description = LoanConstants.STATUS_200_desc,
                             content = @Content(
                                     schema = @Schema(
                                             implementation = LoanDto.class
@@ -76,7 +95,7 @@ public class LoanController {
                     ),
                     @ApiResponse(
                             responseCode = "404",
-                            description = "Not Found",
+                            description = LoanConstants.STATUS_404_desc,
                             content = @Content(
                                     schema = @Schema(
                                             implementation = ErrorResponseDto.class
@@ -87,7 +106,7 @@ public class LoanController {
 
                     @ApiResponse(
                             responseCode = "500",
-                            description = "Internal Server Error",
+                            description = LoanConstants.STATUS_500_desc,
                             content = @Content(
                                     schema = @Schema(
                                             implementation = ErrorResponseDto.class
@@ -111,7 +130,7 @@ public class LoanController {
             responses = {
                     @ApiResponse(
                             responseCode = "200",
-                            description = "Loan details updated successfully",
+                            description = LoanConstants.STATUS_200_desc,
                             content = @Content(
                                     schema = @Schema(
                                             implementation = ResponseDto.class
@@ -131,7 +150,7 @@ public class LoanController {
                     ),
                     @ApiResponse(
                             responseCode = "404",
-                            description = "Not Found",
+                            description = LoanConstants.STATUS_404_desc,
                             content = @Content(
                                     schema = @Schema(
                                             implementation = ErrorResponseDto.class
@@ -142,7 +161,7 @@ public class LoanController {
 
                     @ApiResponse(
                             responseCode = "500",
-                            description = "Internal Server Error",
+                            description = LoanConstants.STATUS_500_desc,
                             content = @Content(
                                     schema = @Schema(
                                             implementation = ErrorResponseDto.class
@@ -173,7 +192,7 @@ public class LoanController {
             responses = {
                     @ApiResponse(
                             responseCode = "200",
-                            description = "Loan details deleted successfully",
+                            description = LoanConstants.STATUS_200_desc,
                             content = @Content(
                                     schema = @Schema(
                                             implementation = ResponseDto.class
@@ -193,7 +212,7 @@ public class LoanController {
                     ),
                     @ApiResponse(
                             responseCode = "404",
-                            description = "Not Found",
+                            description = LoanConstants.STATUS_404_desc,
                             content = @Content(
                                     schema = @Schema(
                                             implementation = ErrorResponseDto.class
@@ -204,7 +223,7 @@ public class LoanController {
 
                     @ApiResponse(
                             responseCode = "500",
-                            description = "Internal Server Error",
+                            description = LoanConstants.STATUS_500_desc,
                             content = @Content(
                                     schema = @Schema(
                                             implementation = ErrorResponseDto.class
@@ -230,6 +249,133 @@ public class LoanController {
                             LoanConstants.STATUS_CODE_417,LoanConstants.MESSAGE_417_DELETE));
         }
     }
+
+    @Operation(
+            summary = "REST API to Fetch Build Version",
+            description = "REST API use to fetch application build information",
+            responses = {
+                    @ApiResponse(
+                            responseCode = "200",
+                            description = LoanConstants.STATUS_200_desc
+
+                    ),
+                    @ApiResponse(
+                            responseCode = "404",
+                            description = LoanConstants.STATUS_404_desc,
+                            content = @Content(
+                                    schema = @Schema(
+                                            implementation = ErrorResponseDto.class
+                                    )
+                            )
+
+                    ),
+
+                    @ApiResponse(
+                            responseCode = "500",
+                            description = LoanConstants.STATUS_500_desc,
+                            content = @Content(
+                                    schema = @Schema(
+                                            implementation = ErrorResponseDto.class
+                                    )
+                            )
+
+                    )
+            }
+    )
+
+    @GetMapping("/build-info")
+    public  ResponseEntity<Map<String,String>> getBuildInfo(){
+        Map<String,String> versionInfo = new LinkedHashMap<>();
+        versionInfo.put("Name","Eazy Bank Loan Microservice");
+        versionInfo.put("version", build);
+        versionInfo.put("Build Date", "2024-10-20");
+        return ResponseEntity.ok(versionInfo);
+    }
+
+    @Operation(
+            summary = "REST API to Fetch JDK Version",
+            description = "REST API use to fetch application JDK information",
+            responses = {
+                    @ApiResponse(
+                            responseCode = "200",
+                            description = LoanConstants.STATUS_200_desc,
+                            content = @Content(
+                                    schema = @Schema(
+                                            example = "JDK: version"
+                                    )
+                    )
+
+                    ),
+                    @ApiResponse(
+                            responseCode = "404",
+                            description = LoanConstants.STATUS_404_desc,
+                            content = @Content(
+                                    schema = @Schema(
+                                            implementation = ErrorResponseDto.class
+                                    )
+                            )
+
+                    ),
+
+                    @ApiResponse(
+                            responseCode = "500",
+                            description = LoanConstants.STATUS_500_desc,
+                            content = @Content(
+                                    schema = @Schema(
+                                            implementation = ErrorResponseDto.class
+                                    )
+                            )
+
+                    )
+            }
+    )
+
+    @GetMapping("/java-info")
+    public  ResponseEntity<Map<String,String>> getJavaVersionInfo(){
+        Map<String,String> javaInfo = new  LinkedHashMap<>();
+        javaInfo.put("JDK",env.getProperty("java.version"));
+        return ResponseEntity.ok(javaInfo);
+    }
+
+    @Operation(
+            summary = "REST API to Fetch Contact",
+            description = "REST API use to fetch contact information",
+            responses = {
+                    @ApiResponse(
+                            responseCode = "200",
+                            description = LoanConstants.STATUS_200_desc
+
+                    ),
+                    @ApiResponse(
+                            responseCode = "404",
+                            description = LoanConstants.STATUS_404_desc,
+                            content = @Content(
+                                    schema = @Schema(
+                                            implementation = ErrorResponseDto.class
+                                    )
+                            )
+
+                    ),
+
+                    @ApiResponse(
+                            responseCode = "500",
+                            description = LoanConstants.STATUS_500_desc,
+                            content = @Content(
+                                    schema = @Schema(
+                                            implementation = ErrorResponseDto.class
+                                    )
+                            )
+
+                    )
+            }
+    )
+
+    @GetMapping("/contact-info")
+    public  ResponseEntity<LoanContactInfoDto> getContactInfo(){
+        return ResponseEntity.ok(loanContactInfoDto);
+    }
+
+
 
 
 }

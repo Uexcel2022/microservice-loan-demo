@@ -17,7 +17,7 @@ public class ErrorResponseDto {
     )
     private String apiPath;
     @Schema(
-            description = "Response codes" ,example = "400,500"
+            description = "Response codes" ,example = "400,500,404"
     )
     private HttpStatus errorCode;
     @Schema(

@@ -14,7 +14,7 @@ import lombok.Setter;
 @NoArgsConstructor
 public class ResponseDto {
     @Schema(
-            description = "Responses codes",example = "200,417"
+            description = "Responses codes",example = "200,417,201"
     )
     private String statusCode;
     @Schema(

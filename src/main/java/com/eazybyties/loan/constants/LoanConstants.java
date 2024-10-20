@@ -11,4 +11,9 @@ public class LoanConstants {
     public static final  String  STATUS_CODE_200 = "200";
     public static final String MESSAGE_200_UPDATE = "Loan updated successfully";
     public static final String MESSAGE_200_DELETE = "Loan deleted successfully";
+    public static final  String  STATUS_200_desc = "HTTP Status OK";
+    public static final  String  STATUS_201_desc = "HTTP Status Created";
+    public static final  String  STATUS_404_desc = "Not Found";
+    public static final  String  STATUS_500_desc = "Internal Server Error";
+    public static final  String  STATUS_417_desc = "Exception Failed";
 }

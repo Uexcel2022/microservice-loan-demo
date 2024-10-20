@@ -1,0 +1,13 @@
+spring:
+  config:
+    activate:
+      on-profile: prod
+
+loan:
+  message: Welcome to EazyBank Loan related local production APIs
+  contactDetails:
+    name: Samson Michael - Developer
+    email: samson23@eazybank.com
+  onCallSupport:
+    - (529) 555-1204
+    - (552) 523-1945
