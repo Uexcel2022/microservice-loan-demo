@@ -21,7 +21,7 @@ public class LoanDto {
     @Schema(
             description = "Loan types in EazyBank", example = "home loan"
     )
-    @Pattern(regexp = "(Home loan|vehicle loan|school loan)",message = "Invalid loan type")
+    @Pattern(regexp = "(home loan|vehicle loan|school loan)",message = "Invalid loan type")
     private String loanType;
 
     @Schema(

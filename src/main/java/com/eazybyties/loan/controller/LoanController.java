@@ -39,7 +39,7 @@ public class LoanController {
     private final Environment env;
 
     @Value("${build.version}")
-    private String build;
+    private String buildVersion;
 
     public LoanController(ILoan iloan, LoanContactInfoDto loanContactInfoDto, Environment env) {
         this.iloan = iloan;
@@ -251,7 +251,7 @@ public class LoanController {
 
     @Operation(
             summary = "REST API to Fetch Build Version",
-            description = "REST API use to fetch application build information",
+            description = "REST API use to fetch application buildVersion information",
             responses = {
                     @ApiResponse(
                             responseCode = "200",
@@ -286,7 +286,7 @@ public class LoanController {
     public  ResponseEntity<Map<String,String>> getBuildInfo(){
         Map<String,String> versionInfo = new LinkedHashMap<>();
         versionInfo.put("Name","Eazy Bank Loan Microservice");
-        versionInfo.put("version", build);
+        versionInfo.put("version", buildVersion);
         versionInfo.put("Build Date", "2024-10-20");
         return ResponseEntity.ok(versionInfo);
     }
