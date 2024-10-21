@@ -14,24 +14,11 @@ spring:
     show-sql: true
     hibernate:
       ddl-auto: update
-  config:
-    import:
-      - application_prod.yml
-      - application_qa.yml
   profiles:
-    active: qa
-
+    active: prod
+  config:
+    import: optional:configserver:http://localhost:8071/
+#  optional:configserver:http://localhost:8071/ - add optional when the file is not that important
 server:
   port: 8090
 
-build:
-  version: 1.0
-
-loan:
-  message: Welcome to EazyBank Loan related local APIs
-  contactDetails:
-    name: Ibrahim Lokua - Developer
-    email: ibrahlokua@eazybank.com
-  onCallSupport:
-    - (551) 555-1244
-    - (551) 523-1341
